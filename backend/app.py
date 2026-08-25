@@ -19,16 +19,7 @@ FRONTEND_DIR = os.path.join(PROJECT_DIR, "frontend", "dist")
 
 # FLASK
 app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="")
-CORS(
-    app,
-    resources={
-        r"/api/*": {
-            "origins": [
-                "https://fakenewsdetector-frontend-wajf.onrender.com"
-            ]
-        }
-    }
-)
+CORS(app)
 
 
 # LABELS
