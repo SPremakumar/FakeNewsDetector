@@ -80,75 +80,16 @@ print(">>>>>>>>>> Vectorizer chargé")  # todebug
 
 @app.route("/api/predict", methods=["POST"])
 def predict():
-    print("========== DEBUT PREDICTION ==========", flush=True)
+    print("========== TEST API ==========", flush=True)
 
-    try:
-        # 1. Récupération du JSON
-        data = request.get_json(silent=True)
-        print("DATA :", data, flush=True)
+    data = request.get_json(silent=True)
 
-        if data is None:
-            return jsonify({
-                "error": "JSON invalide"
-            }), 400
+    print("DATA :", data, flush=True)
 
-        # 2. Récupération du texte
-        texte = data.get("texte", "")
-
-        print("TEXTE :", texte, flush=True)
-
-        if not isinstance(texte, str) or not texte.strip():
-            return jsonify({
-                "error": "Texte vide ou invalide"
-            }), 400
-
-        # 3. Vectorisation
-        print("Début vectorisation...", flush=True)
-
-        sequence = vectorizer([texte])
-
-        print("Vectorisation terminée", flush=True)
-        print("Shape :", sequence.shape, flush=True)
-
-        # 4. Prédiction
-        print("Début prédiction TensorFlow...", flush=True)
-
-        prediction = model.predict(
-            sequence,
-            verbose=0
-        )
-
-        print("Prédiction terminée :", prediction, flush=True)
-
-        # 5. Classe
-        classe = int(np.argmax(prediction[0]))
-
-        print("Classe :", classe, flush=True)
-
-        # 6. Confiance
-        confiance = float(prediction[0][classe])
-
-        print("Confiance :", confiance, flush=True)
-
-        # 7. Résultat
-        resultat = labels[classe]
-
-        print("Résultat :", resultat, flush=True)
-        print("========== FIN PREDICTION ==========", flush=True)
-
-        return jsonify({
-            "prediction": resultat,
-            "confidence": confiance
-        })
-
-    except Exception as e:
-        print("========== ERREUR PREDICTION ==========", flush=True)
-        print(type(e).__name__, flush=True)
-        print(str(e), flush=True)
-
-        return jsonify({
-            "error": str(e)
-        }), 500
+    return jsonify({
+        "prediction": "true statement",
+        "confidence": 0.99
+    })
 
 
 
