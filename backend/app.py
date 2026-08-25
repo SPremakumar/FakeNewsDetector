@@ -152,8 +152,8 @@ CORS(
 
 # dictionnaire label binaire -> texte.
 labels = {
-    0: "true statement",
-    1: "false statement"
+    0: "Vrai déclaration",
+    1: "Fausse déclaration"
 }
 
 # CHARGEMENT DU MODÈLE
@@ -175,72 +175,39 @@ print(">>>>>>>>>> Vectorizer chargé")  # todebug
 
 @app.route("/api/predict", methods=["POST"])
 def predict():
-    print("========== 1. API ==========", flush=True)
     # Récupération des données envoyées par React
     data = request.get_json(silent=True)
 
     # Récupération du texte
-    print("========== 2. DATA ==========", flush=True)
-    print(data, flush=True)
     texte = data.get("texte", "")
 
     # Transformation du texte en séquence
-    print("========== 3. TEXTE ==========", flush=True)
-    print(texte, flush=True)
     sequence = vectorizer([texte])
 
     # Prédiction avec le Bi-LSTM
-    print("========== 4. VECTORISATION OK ==========", flush=True)
     print(sequence.shape, flush=True)
-    # prediction = model.predict(sequence,verbose=0)
+    # prediction = model.predict(sequence,verbose=0) # fonctionne pas avec render 
     # print("Prédiction :", prediction)  # todebug
-    print("========== 4.1 AVANT MODEL ==========", flush=True)
-    print("Type model :", type(model), flush=True)
-
-    try:
-        print("========== 4.2 AVANT PREDICT ==========", flush=True)
-        # prediction = predict(sequence, verbose=0)
-        prediction = model(sequence, training=False).numpy()
-
-        print("========== 4.3 APRES PREDICT ==========", flush=True)
-        print("Prédiction :", prediction, flush=True)
-
-    except Exception as e:
-        print("========== ERREUR MODEL ==========", flush=True)
-        print("Type :", type(e).__name__, flush=True)
-        print("Message :", str(e), flush=True)
-
-        return jsonify({
-            "error": str(e),
-            "type": type(e).__name__
-        }), 500
-
-
-
+    # prediction = predict(sequence, verbose=0) # fonctionne pas avec render 
+    prediction = model(sequence, training=False).numpy()
 
     # Classe gagnante
-    print("========== 5. PREDICTION OK ==========", flush=True)
-    print(prediction, flush=True)
     classe = int(np.argmax(prediction[0]))
 
     # Confiance
-    print("========== 6. CLASSE ==========", flush=True)
-    print(classe, flush=True)
     confiance = float(prediction[0][classe])
     print("Confiance :", confiance)  # todebug
 
     # Résultat
-    print("========== 7. CONFIANCE ==========", flush=True)
-    print(confiance, flush=True)
     resultat = labels[classe]
     print("Résultat :", resultat)
 
-    print("========== 8. RESULTAT ==========", flush=True)
-    print(resultat, flush=True)
     return jsonify({
-        "prediction": "true statement",
-        "confidence": 0.99
+        "prediction": resultat,
+        "confidence": confiance
     })
+
+
 
 # def predict():
 #     print("========== TEST API ==========", flush=True)
