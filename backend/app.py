@@ -199,8 +199,8 @@ def predict():
 
     try:
         print("========== 4.2 AVANT PREDICT ==========", flush=True)
-
-        prediction = model.predict(sequence, verbose=0)
+        # prediction = predict(sequence, verbose=0)
+        prediction = model(sequence, training=False).numpy()
 
         print("========== 4.3 APRES PREDICT ==========", flush=True)
         print("Prédiction :", prediction, flush=True)
