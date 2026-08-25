@@ -200,8 +200,8 @@ def predict():
     print("Résultat :", resultat)
 
     return jsonify({
-        "prediction": "true",
-        "confidence": confiance
+        "prediction": resultat,
+        "confidence": 0.99
     })
 
 # def predict():
