@@ -1,0 +1,48 @@
+.live-preview {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+
+  font-family: "Latin Modern Sans", "LM Sans", Arial, sans-serif;
+}
+
+/* Titre */
+.preview-title {
+  margin: 0 0 20px;
+
+  font-family: "Latin Modern Sans", "LM Sans", Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+
+  color: #333333;
+}
+
+/* Contenu */
+.preview-content {
+  width: 100%;
+  min-height: 250px;
+
+  padding: 15px;
+
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+
+  font-family: "Latin Modern Sans", "LM Sans", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+
+  color: #333333;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+/* Texte lorsqu'il n'y a aucun résultat */
+.preview-content:empty {
+  color: #999999;
+}

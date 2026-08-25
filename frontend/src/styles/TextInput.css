@@ -1,0 +1,74 @@
+.text-input {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+
+  font-family: "Latin Modern Sans", "LM Sans", Arial, sans-serif;
+}
+
+/* Titre */
+.text-input h2 {
+  margin: 0 0 20px;
+
+  font-family: "Latin Modern Sans", "LM Sans", Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333333;
+}
+
+/* Zone de texte */
+.text-input textarea {
+  display: block;
+  width: 100%;
+  min-height: 250px;
+
+  padding: 15px;
+
+  resize: vertical;
+
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+
+  font-family: "Latin Modern Sans", "LM Sans", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333333;
+}
+
+.text-input textarea::placeholder {
+  color: #999999;
+}
+
+/* Quand on clique dans la zone */
+.text-input textarea:focus {
+  outline: none;
+  border-color: #777777;
+}
+
+/* Bouton */
+.text-input button {
+  margin-top: 15px;
+  padding: 10px 22px;
+
+  background-color: #333333;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 6px;
+
+  font-family: "Latin Modern Sans", "LM Sans", Arial, sans-serif;
+  font-size: 16px;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.text-input button:hover {
+  background-color: #555555;
+}
