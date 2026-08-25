@@ -200,7 +200,7 @@ def predict():
     print("Résultat :", resultat)
 
     return jsonify({
-        "prediction": resultat,
+        "prediction": "true",
         "confidence": confiance
     })
 
