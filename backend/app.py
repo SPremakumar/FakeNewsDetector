@@ -175,13 +175,45 @@ print(">>>>>>>>>> Vectorizer chargé")  # todebug
 
 @app.route("/api/predict", methods=["POST"])
 def predict():
-    print("========== TEST API ==========", flush=True)
-    data = request.get_json(silent=True)
-    print("DATA :", data, flush=True)
+    # Récupération des données envoyées par React
+    data = request.get_json()
+
+    # Récupération du texte
+    texte = data.get("texte", "")
+
+    # Transformation du texte en séquence
+    sequence = vectorizer([texte])
+
+    # Prédiction avec le Bi-LSTM
+    prediction = model.predict(sequence,verbose=0)
+    print("Prédiction :", prediction)  # todebug
+
+    # Classe gagnante
+    classe = int(np.argmax(prediction[0]))
+
+    # Confiance
+    confiance = float(prediction[0][classe])
+    print("Confiance :", confiance)  # todebug
+
+    # Résultat
+    resultat = labels[classe]
+    print("Résultat :", resultat)
+
     return jsonify({
-        "prediction": "true statement",
-        "confidence": 0.99
+        "prediction": resultat,
+        "confidence": confiance
     })
+
+# def predict():
+#     print("========== TEST API ==========", flush=True)
+#     data = request.get_json(silent=True)
+#     print("DATA :", data, flush=True)
+#     return jsonify({
+#         "prediction": "true statement",
+#         "confidence": 0.99
+#     })
+
+
 
 
 @app.route("/", methods=["GET"])
