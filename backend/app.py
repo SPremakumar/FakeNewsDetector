@@ -198,9 +198,11 @@ def predict():
     print("Type model :", type(model), flush=True)
 
     try:
+        print("========== 4.2 AVANT PREDICT ==========", flush=True)
+
         prediction = model.predict(sequence, verbose=0)
 
-        print("========== 4.2 MODEL OK ==========", flush=True)
+        print("========== 4.3 APRES PREDICT ==========", flush=True)
         print("Prédiction :", prediction, flush=True)
 
     except Exception as e:
