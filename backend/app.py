@@ -19,8 +19,12 @@ FRONTEND_DIR = os.path.join(PROJECT_DIR, "frontend", "dist")
 
 # FLASK
 app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="")
-CORS(app)
-
+CORS(
+    app,
+    resources={r"/api/*": {"origins": "*"}},
+    methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"]
+)
 
 # LABELS
 labels = {0: "true statement", 1: "false statement"}
