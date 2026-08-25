@@ -4,6 +4,15 @@ FakeNewsDetector est une application de détection de fausses informations basé
 
 L'application permet à l'utilisateur de saisir une information textuelle et d'obtenir une prédiction indiquant si celle-ci est considérée comme vraie ou fausse, accompagnée d'un score de confiance.
 
+
+## Application web
+
+L’application est disponible en ligne et peut être utilisée directement depuis un navigateur :
+
+"Accéder à la WebApp FakeNewsDetector" (https://fakenewsdetector-frontend-wajf.onrender.com/)
+
+La WebApp permet de saisir une information et d’obtenir une prédiction indiquant si elle est considérée comme vraie ou fausse, avec un niveau de confiance associé.
+
 ## Utilisation
 
 ### Version Windows
