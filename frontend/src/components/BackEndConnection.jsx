@@ -1,5 +1,5 @@
 // URL de l'API Flask
-const API_URL = '/api';
+const API_URL = 'https://fakenewsdetector-3dbh.onrender.com/';
 
 // Gère la communication avec le backend Flask
 export const sendPrediction = async (texte) => {
