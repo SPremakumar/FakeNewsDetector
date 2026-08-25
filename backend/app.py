@@ -192,8 +192,29 @@ def predict():
     # Prédiction avec le Bi-LSTM
     print("========== 4. VECTORISATION OK ==========", flush=True)
     print(sequence.shape, flush=True)
-    prediction = model.predict(sequence,verbose=0)
-    print("Prédiction :", prediction)  # todebug
+    # prediction = model.predict(sequence,verbose=0)
+    # print("Prédiction :", prediction)  # todebug
+    print("========== 4.1 AVANT MODEL ==========", flush=True)
+    print("Type model :", type(model), flush=True)
+
+    try:
+        prediction = model.predict(sequence, verbose=0)
+
+        print("========== 4.2 MODEL OK ==========", flush=True)
+        print("Prédiction :", prediction, flush=True)
+
+    except Exception as e:
+        print("========== ERREUR MODEL ==========", flush=True)
+        print("Type :", type(e).__name__, flush=True)
+        print("Message :", str(e), flush=True)
+
+        return jsonify({
+            "error": str(e),
+            "type": type(e).__name__
+        }), 500
+
+
+
 
     # Classe gagnante
     print("========== 5. PREDICTION OK ==========", flush=True)
