@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import TextInput from "./components/TextInput";
 import LivePreview from "./components/OutputPreview";
-import { sendPrediction } from "./components/BackendConnection";
+import { sendPrediction } from "./components/BackEndConnection";
 import './App.css'
 
 function App() {
