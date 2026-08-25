@@ -48,35 +48,108 @@ print(">>>>>>>>>> Vectorizer chargé")  # todebug
 
 # API DE PRÉDICTION
 @app.route("/api/predict", methods=["POST"])
+# def predict():
+#     # Récupération des données envoyées par React
+#     data = request.get_json()
+
+#     # Récupération du texte
+#     texte = data.get("texte", "")
+
+#     # Transformation du texte en séquence
+#     sequence = vectorizer([texte])
+
+#     # Prédiction avec le Bi-LSTM
+#     prediction = model.predict(sequence,verbose=0)
+#     print("Prédiction :", prediction)  # todebug
+
+#     # Classe gagnante
+#     classe = int(np.argmax(prediction[0]))
+
+#     # Confiance
+#     confiance = float(prediction[0][classe])
+#     print("Confiance :", confiance)  # todebug
+
+#     # Résultat
+#     resultat = labels[classe]
+#     print("Résultat :", resultat)
+
+#     return jsonify({
+#         "prediction": resultat,
+#         "confidence": confiance
+#     })
+
+@app.route("/api/predict", methods=["POST"])
 def predict():
-    # Récupération des données envoyées par React
-    data = request.get_json()
+    print("========== DEBUT PREDICTION ==========", flush=True)
 
-    # Récupération du texte
-    texte = data.get("texte", "")
+    try:
+        # 1. Récupération du JSON
+        data = request.get_json(silent=True)
+        print("DATA :", data, flush=True)
 
-    # Transformation du texte en séquence
-    sequence = vectorizer([texte])
+        if data is None:
+            return jsonify({
+                "error": "JSON invalide"
+            }), 400
 
-    # Prédiction avec le Bi-LSTM
-    prediction = model.predict(sequence,verbose=0)
-    print("Prédiction :", prediction)  # todebug
+        # 2. Récupération du texte
+        texte = data.get("texte", "")
 
-    # Classe gagnante
-    classe = int(np.argmax(prediction[0]))
+        print("TEXTE :", texte, flush=True)
 
-    # Confiance
-    confiance = float(prediction[0][classe])
-    print("Confiance :", confiance)  # todebug
+        if not isinstance(texte, str) or not texte.strip():
+            return jsonify({
+                "error": "Texte vide ou invalide"
+            }), 400
 
-    # Résultat
-    resultat = labels[classe]
-    print("Résultat :", resultat)
+        # 3. Vectorisation
+        print("Début vectorisation...", flush=True)
 
-    return jsonify({
-        "prediction": resultat,
-        "confidence": confiance
-    })
+        sequence = vectorizer([texte])
+
+        print("Vectorisation terminée", flush=True)
+        print("Shape :", sequence.shape, flush=True)
+
+        # 4. Prédiction
+        print("Début prédiction TensorFlow...", flush=True)
+
+        prediction = model.predict(
+            sequence,
+            verbose=0
+        )
+
+        print("Prédiction terminée :", prediction, flush=True)
+
+        # 5. Classe
+        classe = int(np.argmax(prediction[0]))
+
+        print("Classe :", classe, flush=True)
+
+        # 6. Confiance
+        confiance = float(prediction[0][classe])
+
+        print("Confiance :", confiance, flush=True)
+
+        # 7. Résultat
+        resultat = labels[classe]
+
+        print("Résultat :", resultat, flush=True)
+        print("========== FIN PREDICTION ==========", flush=True)
+
+        return jsonify({
+            "prediction": resultat,
+            "confidence": confiance
+        })
+
+    except Exception as e:
+        print("========== ERREUR PREDICTION ==========", flush=True)
+        print(type(e).__name__, flush=True)
+        print(str(e), flush=True)
+
+        return jsonify({
+            "error": str(e)
+        }), 500
+
 
 
 # REACT
