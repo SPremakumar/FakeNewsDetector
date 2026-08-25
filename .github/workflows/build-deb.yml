@@ -39,15 +39,20 @@ jobs:
 
       - name: Build application
         run: |
-          pyinstaller FakeNewsDetector.spec
+          pyinstaller --clean fakenewsdetector.spec
+
+      - name: Check build
+        run: |
+          ls -lah dist
+          test -f dist/FakeNewsDetector
 
       - name: Create DEB structure
         run: |
           mkdir -p package/DEBIAN
           mkdir -p package/opt/FakeNewsDetector
 
-          cp -r dist/FakeNewsDetector/* \
-            package/opt/FakeNewsDetector/
+          cp dist/FakeNewsDetector \
+             package/opt/FakeNewsDetector/
 
       - name: Create control file
         run: |
@@ -64,14 +69,13 @@ jobs:
 
       - name: Create launcher
         run: |
-          cat > package/usr-bin-fakenewsdetector <<'EOF'
+          mkdir -p package/usr/bin
+
+          cat > package/usr/bin/fakenewsdetector <<'EOF'
           #!/bin/sh
           exec /opt/FakeNewsDetector/FakeNewsDetector "$@"
           EOF
 
-          mkdir -p package/usr/bin
-          mv package/usr-bin-fakenewsdetector \
-             package/usr/bin/fakenewsdetector
           chmod +x package/usr/bin/fakenewsdetector
 
       - name: Build DEB
